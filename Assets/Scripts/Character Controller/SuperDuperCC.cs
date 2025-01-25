@@ -37,13 +37,15 @@ public class SuperDuperCC : MonoBehaviour
     private Vector3 _move;
     private float _initialJumpVelocity;
     private bool _isAiming = false;
-
+    private float _xRotation = 0f; // Tracks the current X-axis rotation
+    
     private void Start()
     {
         playerInput.actions["Jump"].performed += ctx => HandleJump();
         _initialJumpVelocity = Mathf.Sqrt(2 * -gravity * jumpHeight);
         playerInput.actions["Aim"].performed += ctx => HandleAim(true);
         playerInput.actions["Aim"].canceled += ctx => HandleAim(false);
+        HandleAim(false);
     }
 
     private void HandleAim(bool isAiming)
@@ -83,13 +85,16 @@ public class SuperDuperCC : MonoBehaviour
         if (mouseInput == Vector2.zero) return;
 
         // Rotate player using mouse input as quaternion delta
-        var deltaXAxis = Quaternion.Euler(-mouseInput.y, 0, 0);
         var deltaYAxis = Quaternion.Euler(0, mouseInput.x, 0);
       
         controller.transform.rotation *= deltaYAxis;
-        lookDirection.rotation *= deltaXAxis;
+        
+        _xRotation -= mouseInput.y;
+        _xRotation = Mathf.Clamp(_xRotation, -maxLookAngle, maxLookAngle);
+        lookDirection.localRotation = Quaternion.Euler(_xRotation, 0, 0);
     }
 
+    
     private void HandleMovement()
     {
         var input = playerInput.actions["Move"].ReadValue<Vector2>();

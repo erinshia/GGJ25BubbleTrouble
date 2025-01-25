@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611861129296832094}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.088, y: 0.30000007, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -179,6 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8003994314928471783}
+  - component: {fileID: 3423439228776689256}
   m_Layer: 0
   m_Name: LookAt
   m_TagString: Player
@@ -201,6 +202,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 390250986516648926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1818360609 &3423439228776689256
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913972360253153523}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 0
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources: []
 --- !u!1 &2555604414531763227
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,9 +284,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8453211243148355693}
-  - {fileID: 390250986516648926}
   - {fileID: 5963513716328324376}
   - {fileID: 3889151363579217311}
+  - {fileID: 390250986516648926}
   - {fileID: 1450339768056715524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -293,7 +312,7 @@ MonoBehaviour:
   maxSpeed: 1
   jumpHeight: 0.4
   lookDirection: {fileID: 8003994314928471783}
-  maxLookAngle: 90
+  maxLookAngle: 75
   freeLookCam: {fileID: 22150674049054137}
   aimCam: {fileID: 4534909602298281227}
   rayCastOrigin: {fileID: 6348461912768799327}
@@ -373,8 +392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 1
-    m_Value: 0
+    Enabled: 0
+    m_Value: 1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -533,8 +552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 1
-    m_Value: 1
+    Enabled: 0
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
