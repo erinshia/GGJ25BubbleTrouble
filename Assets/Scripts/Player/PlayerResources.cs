@@ -37,9 +37,4 @@ public class PlayerResources : MonoBehaviour
         if (playerStats.currentHealth <= 0)
             GlobalEventHandler.Instance.TriggerGameOver();
     }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("OnCollisionEnter Player " + other.gameObject.name);
-    }
 }

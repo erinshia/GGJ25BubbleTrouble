@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CorkProjectile
       objectReference: {fileID: 0}
+    - target: {fileID: 4467816809599127316, guid: 7fe01cc83f0be3c47bcc53a7e3a5b9d6, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5326963630329377030, guid: 7fe01cc83f0be3c47bcc53a7e3a5b9d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

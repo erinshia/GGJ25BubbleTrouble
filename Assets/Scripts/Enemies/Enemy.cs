@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 [Serializable]
 public struct EnemyStats
@@ -13,4 +14,12 @@ public struct EnemyStats
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] protected EnemyStats _stats;
+    // TODO remove this
+    [SerializeField] protected GameObject _player;
+    protected NavMeshAgent _navMeshAgent;
+    
+    private void Awake()
+    {
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+    }
 }
