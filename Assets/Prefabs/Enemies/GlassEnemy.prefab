@@ -148,7 +148,7 @@ MonoBehaviour:
   _stats:
     maxHealth: 2
     currentHealth: 2
-    movementSpeed: 0.5
+    movementSpeed: 3.5
     PercentageHealthOnKill: 5
   _player: {fileID: 0}
   _playerLayer:

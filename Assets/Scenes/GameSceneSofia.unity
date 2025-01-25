@@ -506,6 +506,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 296970251}
+    - target: {fileID: 7324061940835565521, guid: 917a09333486ee64bb249fb275247ae5, type: 3}
+      propertyPath: _stats.movementSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8219498710848422017, guid: 917a09333486ee64bb249fb275247ae5, type: 3}
       propertyPath: m_Name
       value: BottleEnemy
@@ -828,6 +832,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 296970251}
+    - target: {fileID: 7939727653094974802, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _stats.movementSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1959,10 +1967,6 @@ PrefabInstance:
     - target: {fileID: 1199147592096343264, guid: 34d341c886a05804f894ea02454e6a13, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1438349697547088443, guid: 34d341c886a05804f894ea02454e6a13, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3113252905442647815, guid: 34d341c886a05804f894ea02454e6a13, type: 3}
       propertyPath: m_LocalPosition.x

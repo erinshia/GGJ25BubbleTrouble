@@ -23,10 +23,10 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private bool _inRange;
     private bool _navigationActive; 
     
-    
     protected virtual void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = _stats.movementSpeed;
         _weapon = GetComponent<Weapon>();
     }
 
@@ -43,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
     [ContextMenu("Kill Enemy")]
     private void KillEnemy()
     {
-        OnEnemyHit(10000);
+        OnEnemyHit(100);
     }
     
     private void OnEnemyHit(int damage)
