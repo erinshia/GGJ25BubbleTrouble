@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SuperDuperCC : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
-    [SerializeField] private Transform lookDirection;
     [SerializeField] private PlayerInput playerInput;
 
     [Header("Interpolation Settings")]
@@ -19,25 +20,53 @@ public class SuperDuperCC : MonoBehaviour
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
 
-    [Header("Look Settings")]
+    [Header("Camera Settings")]
+    [SerializeField] private Transform lookDirection;
     [SerializeField] private float maxLookAngle = 90f;
+    [SerializeField] private CinemachineCamera freeLookCam;
+    [SerializeField] private CinemachineCamera aimCam;
+    [SerializeField] private Transform rayCastOrigin;
+    
+    public event Action OnAimEnter;
+    public event Action OnAimExit;
+    public event Action OnJump;
+    
     
     private bool _jump = false;
     private bool _isJumping = false;
     private Vector3 _move;
     private float _initialJumpVelocity;
+    private bool _isAiming = false;
 
     private void Start()
     {
         playerInput.actions["Jump"].performed += ctx => HandleJump();
         _initialJumpVelocity = Mathf.Sqrt(2 * -gravity * jumpHeight);
+        playerInput.actions["Aim"].performed += ctx => HandleAim(true);
+        playerInput.actions["Aim"].canceled += ctx => HandleAim(false);
+    }
 
+    private void HandleAim(bool isAiming)
+    {
+        _isAiming = isAiming;
+        if (_isAiming)
+        {
+            aimCam.Prioritize();
+            OnAimEnter?.Invoke();
+        }
+        else
+        {
+            freeLookCam.Prioritize();
+            OnAimExit?.Invoke();
+        }
     }
 
     private void HandleJump()
     {
-        if(controller.isGrounded && !_isJumping)
+        if (controller.isGrounded && !_isJumping)
+        {
             _jump = true;
+        }
     }
 
     void Update()
@@ -68,6 +97,7 @@ public class SuperDuperCC : MonoBehaviour
         if (controller.isGrounded && _jump && !_isJumping)
         {
             StartCoroutine(JumpCoroutine());
+            OnJump?.Invoke();
         }
         
         float gravityMultiplier = _move.y < 0 ? 2f : 1f;
@@ -105,6 +135,27 @@ public class SuperDuperCC : MonoBehaviour
         var targetPosition = controller.transform.position;
         interpolateTarget.position = Vector3.Lerp(interpolateTarget.position, targetPosition, Time.deltaTime * smoothTime);
 
+        if (_isAiming)
+        {
+            //raycast from cinematic camera
+            var ray = new Ray(aimCam.transform.position, aimCam.transform.forward);
+            if (Physics.Raycast(ray, out var hit, 1000f))
+            {
+                var target = hit.point;
+                //rotate the player to face the target
+                var lookAtTarget = Quaternion.LookRotation(target - controller.transform.position);
+                interpolateTarget.rotation = Quaternion.Slerp(interpolateTarget.rotation, lookAtTarget, Time.deltaTime * smoothTime);
+            }
+            else
+            {
+                //rotate the player to face the camera forward
+                var lookAtCamera = Quaternion.LookRotation(aimCam.transform.forward);
+                interpolateTarget.rotation = Quaternion.Slerp(interpolateTarget.rotation, lookAtCamera, Time.deltaTime * smoothTime);
+            }
+            return;
+        }
+        
+        
         if (_move is { x: 0, z: 0 }) return;
         
         // Rotate player to face movement direction
