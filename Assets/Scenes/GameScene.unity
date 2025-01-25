@@ -537,7 +537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 76}
+  m_AnchoredPosition: {x: 0, y: 75}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &840696744
@@ -780,6 +780,7 @@ GameObject:
   m_Component:
   - component: {fileID: 999236672}
   - component: {fileID: 999236671}
+  - component: {fileID: 999236673}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -799,7 +800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ce8652e5e87e4294774f41b6b4d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1773298250}
+  _sceneLoader: {fileID: 999236673}
+  _pauseScreen: {fileID: 1773298253}
 --- !u!4 &999236672
 Transform:
   m_ObjectHideFlags: 0
@@ -816,6 +818,18 @@ Transform:
   - {fileID: 1773298249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &999236673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999236670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b123ad1607592ae43aa2be41802665e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1205397414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1057,6 @@ GameObject:
   - component: {fileID: 1773298253}
   - component: {fileID: 1773298252}
   - component: {fileID: 1773298251}
-  - component: {fileID: 1773298250}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1073,18 +1086,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1773298250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773298248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b123ad1607592ae43aa2be41802665e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1773298251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,9 +1232,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1773298250}
+      - m_Target: {fileID: 999236673}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
