@@ -60,15 +60,16 @@ public abstract class Enemy : MonoBehaviour
     private void Update()
     {
         Physics.Raycast(transform.position, _player.transform.position - transform.position, out RaycastHit hit);
+        bool shootÍnActive = (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
         
-        if (_navigationActive && (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0)))
+        if (_navigationActive && shootÍnActive)
         {
             _navMeshAgent.destination = _player.transform.position;
         }
-        else
+        else 
         {
             _navMeshAgent.destination = transform.position;
-            _weapon.Fire(_player.transform.position - transform.position);
+            if(!shootÍnActive) _weapon.Fire(_player.transform.position - transform.position);
         }
     }
 

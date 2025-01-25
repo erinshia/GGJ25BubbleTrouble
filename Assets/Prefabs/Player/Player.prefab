@@ -130,8 +130,8 @@ MonoBehaviour:
   playerStats:
     maxHealth: 50
     currentHealth: 50
-    maxAmmo: 20
-    currentAmmo: 20
+    maxAmmo: 50
+    currentAmmo: 50
 --- !u!54 &5797547589486623362
 Rigidbody:
   m_ObjectHideFlags: 0

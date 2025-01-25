@@ -7,8 +7,11 @@ public class GlobalEventHandler : MonoBehaviour
     public Action<int> OnPlayerHit;
     public Action<int> OnEnemyHit;
     public Action<float> OnEnemyKilled;
+    public Action OnAmmoUsed;
     public Action OnGameOver;
     public Action OnWin;
+    public Action OnReload;
+    public Action OnReloadFinished;
 
     private void Awake()
     {
@@ -34,6 +37,18 @@ public class GlobalEventHandler : MonoBehaviour
         OnWin?.Invoke();
     }
     
+    [ContextMenu("Trigger Reload")]
+    public void TriggerReload()
+    {
+        OnReload?.Invoke();
+    }
+    
+    [ContextMenu("Trigger Reload")]
+    public void ReloadFinished()
+    {
+        OnReloadFinished?.Invoke();
+    }
+    
     [ContextMenu("Test Player Health")]
     public void TestPlayerHealth()
     {
@@ -53,5 +68,10 @@ public class GlobalEventHandler : MonoBehaviour
     public void EnemyKilled(float precentageRestored)
     {
         OnEnemyKilled?.Invoke(precentageRestored);
+    }
+
+    public void AmmoUsed()
+    {
+        OnAmmoUsed?.Invoke();
     }
 }

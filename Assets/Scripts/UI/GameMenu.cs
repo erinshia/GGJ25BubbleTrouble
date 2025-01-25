@@ -5,12 +5,14 @@ public class GameMenu : MonoBehaviour
 {
     [SerializeField] private SceneLoader _sceneLoader;
     [SerializeField] private Canvas _pauseScreen;
+    [SerializeField] private ReloadOverlay _reloadOverlay;
     private InputAction _escapeAction;
     
     private void Start()
     {
         GlobalEventHandler.Instance.OnGameOver += LoadLoseScreen;
         GlobalEventHandler.Instance.OnWin += LoadWinScreen;
+        GlobalEventHandler.Instance.OnReload += ShowReloadOverlay;
         
         _escapeAction = InputSystem.actions.FindAction("OpenPauseMenu");
         _escapeAction.started += PauseUnpauseGame;
@@ -20,6 +22,7 @@ public class GameMenu : MonoBehaviour
     {
         GlobalEventHandler.Instance.OnGameOver -= LoadLoseScreen;
         GlobalEventHandler.Instance.OnWin -= LoadWinScreen;
+        GlobalEventHandler.Instance.OnReload -= ShowReloadOverlay;
         _escapeAction.started -= PauseUnpauseGame;
     }
 
@@ -38,5 +41,10 @@ public class GameMenu : MonoBehaviour
     {
         _pauseScreen.gameObject.SetActive(!_pauseScreen.gameObject.activeSelf);
         Time.timeScale = _pauseScreen.gameObject.activeSelf ? 0 : 1;
+    }
+
+    private void ShowReloadOverlay()
+    {
+        _reloadOverlay.gameObject.SetActive(true);
     }
 }

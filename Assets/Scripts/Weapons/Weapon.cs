@@ -25,5 +25,7 @@ public class Weapon : MonoBehaviour
         Projectile projectile = Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation);
         projectile.Initialize(direction, _speed, _damage, _targetLayer, _projectileLifeTime, _isTargetingPlayer);
         _timer = _cooldown;
+        if(!_isTargetingPlayer)
+            GlobalEventHandler.Instance.AmmoUsed();
     }
 }
