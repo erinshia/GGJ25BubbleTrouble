@@ -16,9 +16,13 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected EnemyStats _stats;
     // TODO remove this
     [SerializeField] protected GameObject _player;
-    protected NavMeshAgent _navMeshAgent;
+    private NavMeshAgent _navMeshAgent;
     [SerializeField] protected LayerMask _playerLayer;
-    protected Weapon _weapon;
+    private Weapon _weapon;
+    [SerializeField] private bool _isLongRange;
+    [SerializeField] private bool _inRange;
+    private bool _navigationActive; 
+    
     
     protected virtual void Awake()
     {
@@ -51,5 +55,51 @@ public abstract class Enemy : MonoBehaviour
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        Physics.Raycast(transform.position, _player.transform.position - transform.position, out RaycastHit hit);
+        
+        if (_navigationActive && (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0)))
+        {
+            _navMeshAgent.destination = _player.transform.position;
+        }
+        else
+        {
+            _navMeshAgent.destination = transform.position;
+            _weapon.Fire(_player.transform.position - transform.position);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((_playerLayer.value & (1 << other.transform.gameObject.layer)) <= 0) return;
+
+        if (other.CompareTag("EnemyActivation"))
+        {
+            _navigationActive = true;
+            return;
+        }
+        
+        if (other.CompareTag("LongRange") && !_isLongRange) return;
+        _inRange = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if ((_playerLayer.value & (1 << other.transform.gameObject.layer)) <= 0) return;
+        
+        if (other.CompareTag("EnemyActivation"))
+        {
+            _navigationActive = false;
+            return;
+        }
+
+        if (other.CompareTag("ShortRange") && _isLongRange)
+        {
+            return;
+        }
+        _inRange = false;
     }
 }

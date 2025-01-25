@@ -154,6 +154,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  _isLongRange: 0
+  _inRange: 0
 --- !u!195 &7104863776339941217
 NavMeshAgent:
   m_ObjectHideFlags: 0
