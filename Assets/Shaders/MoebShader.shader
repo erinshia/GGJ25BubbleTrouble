@@ -3,13 +3,20 @@
     Properties
     {
         _MainTex ("Main Texture", 2D) = "white" {}
+        _NormalMap ("Normal Map", 2D) = "bump" {}
+        _Albedo ("Albedo Color", Color) = (1, 1, 1, 1)
         _EdgeThreshold ("Edge Threshold", Range(0, 1)) = 0.1
+        _Transparency ("Transparency", Range(0, 1)) = 1
+        _WiggleStrength ("Wiggle Strength", Range(0.0, 1.0)) = 0.1
+        _NoiseScale ("Noise Scale", Range(0.1, 10.0)) = 1.0
     }
+
     SubShader
     {
         Tags
         {
-            "RenderType"="Opaque" "Queue"="Overlay"
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
         }
         Pass
         {
@@ -18,107 +25,154 @@
             {
                 "LightMode"="UniversalForward"
             }
+            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite On
+
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
-            // Include URP Shader Library
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-            // Textures and Properties
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
+            TEXTURE2D(_NormalMap);
+            SAMPLER(sampler_NormalMap);
+            TEXTURE2D(_CameraNormalsTexture);
+            SAMPLER(sampler_CameraNormalsTexture);
+
+            float4 _Albedo;
             float _EdgeThreshold;
+            float _Transparency;
+            float _WiggleStrength;
+            float _NoiseScale;
 
             struct attributes
             {
                 float4 positionOS : POSITION;
+                float3 normalOS : NORMAL;
+                float4 tangentOS : TANGENT;
                 float2 uv : TEXCOORD0;
+                float4 lightmapUV : TEXCOORD1;
             };
 
             struct varyings
             {
-                float4 positionHCS : SV_POSITION; // Homogeneous Clip Space
-                float2 uv : TEXCOORD0; // UV Coordinates
+                float4 positionHCS : SV_POSITION;
+                float3 positionWS : TEXCOORD1;
+                float3 normalWS : TEXCOORD2;
+                float3 tangentWS : TEXCOORD3;
+                float2 uv : TEXCOORD0;
+                float2 staticLightmapUV : TEXCOORD4;
             };
 
             varyings vert(attributes v)
             {
                 varyings o;
                 o.positionHCS = TransformObjectToHClip(v.positionOS);
+                o.positionWS = TransformObjectToWorld(v.positionOS);
+                o.normalWS = TransformObjectToWorldNormal(v.normalOS);
+                o.tangentWS = TransformObjectToWorldNormal(v.tangentOS.xyz); // World-space tangent
                 o.uv = v.uv;
+                o.staticLightmapUV = v.lightmapUV.xy;
                 return o;
             }
 
-            // Sobel Filter Function
-            float sobel_filter(float2 uv, float2 texelSize)
+            // Simple sine-based noise for UV distortion
+            float2 GenerateNoiseUV(float2 uv)
             {
-                // Sobel Kernels
-                float3 sobelX = float3(-1, 0, 1);
-                float3 sobelY = float3(1, 2, 1);
-
-                float3 gradientX = float3(0.0, 0.0, 0.0);
-                float3 gradientY = float3(0.0, 0.0, 0.0);
-
-                for (int y = -1; y <= 1; y++)
-                {
-                    for (int x = -1; x <= 1; x++)
-                    {
-                        float2 offset = float2(x, y) * texelSize;
-                        float3 sample = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + offset).rgb;
-
-                        gradientX += sample * sobelX[x + 1];
-                        gradientY += sample * sobelY[y + 1];
-                    }
-                }
-
-                // Compute the gradient magnitude
-                float intensity = length(gradientX * gradientX + gradientY * gradientY);
-                return intensity;
+                float noiseX = sin(uv.y * _NoiseScale) * cos(uv.x * _NoiseScale);
+                float noiseY = cos(uv.x * _NoiseScale) * sin(uv.y * _NoiseScale);
+                return float2(noiseX, noiseY) * _WiggleStrength;
             }
+
+            // Function to unpack normals from the normal map
+            float3 UnpackNormalMap(float2 uv, float3 normalWS, float3 tangentWS)
+            {
+                // Sample the normal map
+                float3 tangentNormal = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uv).rgb;
+                tangentNormal = normalize(tangentNormal * 2.0 - 1.0); // Transform from [0, 1] to [-1, 1]
+
+                // Construct the tangent space matrix
+                float3 bitangentWS = normalize(cross(normalWS, tangentWS)); // Bitangent
+                float3x3 tangentToWorld = float3x3(tangentWS, bitangentWS, normalWS);
+
+                // Transform tangent-space normal to world space
+                return normalize(mul(tangentToWorld, tangentNormal));
+            }
+
 
             float4 frag(varyings i) : SV_Target
             {
-                // Screen-space texel size (inverse of resolution)
+                // Screen-space texel size
                 float2 texelSize = 1.0 / _ScreenParams.xy;
 
-                // Sobel filter gradients
-                float gradientX = 0.0;
-                float gradientY = 0.0;
+                // Apply noise to UVs for wiggly lines
+                float2 wigglyUV = i.uv + GenerateNoiseUV(i.uv);
+                // wigglyUV = i.uv;
 
-                // Loop through a 3x3 neighborhood
+                // Sobel filter gradients for albedo
+                float gradientX_Albedo = 0.0, gradientY_Albedo = 0.0;
+
+                // Sobel filter gradients for normals
+                float gradientX_Normal = 0.0, gradientY_Normal = 0.0;
+
+                // Compute normal map-modified normals
+                float3 modifiedNormalWS = UnpackNormalMap(wigglyUV, normalize(i.normalWS), normalize(i.tangentWS));
+
+                // Sobel edge detection on main texture and modified normals
                 for (int y = -1; y <= 1; y++)
                 {
                     for (int x = -1; x <= 1; x++)
                     {
-                        // Sobel X kernel weights
                         float sobelX = (x == -1 ? -1.0 : (x == 1 ? 1.0 : 0.0)) * (y == 0 ? 2.0 : 1.0);
-
-                        // Sobel Y kernel weights
                         float sobelY = (y == -1 ? -1.0 : (y == 1 ? 1.0 : 0.0)) * (x == 0 ? 2.0 : 1.0);
+                        float2 offset = texelSize * float2(x, y);
 
-                        // Texture offset
-                        float2 offset = float2(x, y) * texelSize;
+                        // Sample main texture and normal map
+                        float3 albedoSample = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, wigglyUV + offset).rgb;
+                        float3 normalSample = UnpackNormalMap(wigglyUV + offset, normalize(i.normalWS),
+                                                              normalize(i.tangentWS));
 
-                        // Sample texture and convert to grayscale
-                        float intensity = dot(
-                            SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv + offset).rgb,
-                            float3(0.333, 0.333, 0.333));
+                        // Grayscale intensity from albedo
+                        float intensity = dot(albedoSample, float3(0.333, 0.333, 0.333));
 
                         // Accumulate gradients
-                        gradientX += intensity * sobelX;
-                        gradientY += intensity * sobelY;
+                        gradientX_Albedo += intensity * sobelX;
+                        gradientY_Albedo += intensity * sobelY;
+
+                        // Accumulate normal differences
+                        gradientX_Normal += normalSample.x * sobelX;
+                        gradientY_Normal += normalSample.y * sobelY;
                     }
                 }
 
-                // Calculate edge intensity
-                float edgeIntensity = sqrt(gradientX * gradientX + gradientY * gradientY);
+                // Edge intensity calculations
+                float edgeIntensity_Albedo = sqrt(
+                    gradientX_Albedo * gradientX_Albedo + gradientY_Albedo * gradientY_Albedo);
+                float edgeIntensity_Normal = sqrt(
+                    gradientX_Normal * gradientX_Normal + gradientY_Normal * gradientY_Normal);
 
-                // Apply threshold to highlight edges
+                // Combine edge intensities
+                float edgeIntensity = max(edgeIntensity_Albedo, edgeIntensity_Normal);
                 float edge = step(_EdgeThreshold, edgeIntensity);
 
-                // Return edge-detected color
-                return float4(edge, edge, edge, 1.0);
+                // Lighting calculations (same as before)
+                float3 bakedLight = SampleLightmap(i.staticLightmapUV, modifiedNormalWS);
+                float3 ambientLight = SampleSH(modifiedNormalWS);
+
+                Light mainLight = GetMainLight();
+                float3 lightDir = normalize(mainLight.direction);
+                float lightIntensity = max(0.0, dot(modifiedNormalWS, -lightDir));
+                float3 directionalLight = lightIntensity * mainLight.color.rgb;
+
+                // Combine lighting
+                float3 lighting = bakedLight + ambientLight + directionalLight;
+
+                // Final color
+                float4 baseColor = float4(_Albedo.rgb * lighting, _Albedo.a);
+                return float4(edge * baseColor.rgb, baseColor.a * _Transparency);
             }
             ENDHLSL
         }

@@ -79,10 +79,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1584006214944409509, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
       propertyPath: m_Name
       value: Lui G Bobaioni
       objectReference: {fileID: 0}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3716ed845a84cc94cbf2746e56293e9c, type: 2}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: eab48db140e5a8a40b63ac8f46d81f27, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
