@@ -1,12 +1,21 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameMenu : MonoBehaviour
 {
     [SerializeField] private SceneLoader _sceneLoader;
     [SerializeField] private Canvas _pauseScreen;
+
+    private void Start()
+    {
+        GlobalEventHandler.Instance.OnGameOver += LoadLoseScreen;
+        GlobalEventHandler.Instance.OnWin += LoadWinScreen;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalEventHandler.Instance.OnGameOver -= LoadLoseScreen;
+        GlobalEventHandler.Instance.OnWin -= LoadWinScreen;
+    }
 
     private void Update()
     {
@@ -17,9 +26,14 @@ public class GameMenu : MonoBehaviour
     }
 
     [ContextMenu("Win Game")]
-    private void CompleteGame()
+    private void LoadWinScreen()
     {
         _sceneLoader.LoadScene(2);
+    }
+
+    private void LoadLoseScreen()
+    {
+        _sceneLoader.LoadScene(3);
     }
 
     public void PauseUnpauseGame()
