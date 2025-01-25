@@ -13,14 +13,16 @@ public struct EnemyStats
 
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] protected EnemyStats _stats;
     // TODO remove this
     [SerializeField] protected GameObject _player;
-    private NavMeshAgent _navMeshAgent;
+    
+    [SerializeField] protected EnemyStats _stats;
     [SerializeField] protected LayerMask _playerLayer;
-    private Weapon _weapon;
     [SerializeField] private bool _isLongRange;
     [SerializeField] private bool _inRange;
+    
+    private NavMeshAgent _navMeshAgent;
+    private Weapon _weapon;
     private bool _navigationActive; 
     
     protected virtual void Awake()
@@ -40,36 +42,19 @@ public abstract class Enemy : MonoBehaviour
         GlobalEventHandler.Instance.OnEnemyHit -= OnEnemyHit;
     }
 
-    [ContextMenu("Kill Enemy")]
-    private void KillEnemy()
-    {
-        OnEnemyHit(100);
-    }
-    
-    private void OnEnemyHit(int damage)
-    {
-        _stats.currentHealth -= damage;
-        if (_stats.currentHealth <= 0)
-        {
-            GlobalEventHandler.Instance.EnemyKilled(_stats.PercentageHealthOnKill);
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
-    }
-
     private void Update()
     {
         Physics.Raycast(transform.position, _player.transform.position - transform.position, out RaycastHit hit);
-        bool shootÍnActive = (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
+        bool shootInactive = (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
         
-        if (_navigationActive && shootÍnActive)
+        if (_navigationActive && shootInactive)
         {
             _navMeshAgent.destination = _player.transform.position;
         }
         else 
         {
             _navMeshAgent.destination = transform.position;
-            if(!shootÍnActive) _weapon.Fire(_player.transform.position - transform.position);
+            if(!shootInactive) _weapon.Fire(_player.transform.position - transform.position);
         }
     }
 
@@ -102,5 +87,23 @@ public abstract class Enemy : MonoBehaviour
             return;
         }
         _inRange = false;
+    }
+    
+    // TODO delete test method
+    [ContextMenu("Kill Enemy")]
+    private void KillEnemy()
+    {
+        OnEnemyHit(100);
+    }
+    
+    private void OnEnemyHit(int damage)
+    {
+        _stats.currentHealth -= damage;
+        if (_stats.currentHealth <= 0)
+        {
+            GlobalEventHandler.Instance.EnemyKilled(_stats.PercentageHealthOnKill);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
     }
 }

@@ -3,16 +3,17 @@ using UnityEngine.Serialization;
 
 public class Weapon : MonoBehaviour
 {
-    [FormerlySerializedAs("Damage")] [SerializeField] private int _damage;
-    [FormerlySerializedAs("Damage")] [SerializeField] private float _speed;
-    [FormerlySerializedAs("Cooldown")] [SerializeField] private int _cooldown;
-    [SerializeField] private float _projectileLifeTime;
-    private float _timer = 0;
-    [SerializeField] private float  _range;
-    [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private LayerMask _targetLayer;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _projectileLifeTime;
+    [SerializeField] private float  _range;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _cooldown;
     [SerializeField] private bool _isTargetingPlayer;
 
+    private float _timer;
+    
     private void Update()
     {
         if (_timer > 0)

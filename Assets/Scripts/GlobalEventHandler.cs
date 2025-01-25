@@ -4,14 +4,16 @@ using UnityEngine;
 public class GlobalEventHandler : MonoBehaviour
 {
     public static GlobalEventHandler Instance;
+    
     public Action<int> OnPlayerHit;
     public Action<int> OnEnemyHit;
     public Action<float> OnEnemyKilled;
-    public Action OnAmmoUsed;
+    
     public Action OnGameOver;
     public Action OnWin;
     public Action OnReload;
     public Action OnReloadFinished;
+    public Action OnAmmoUsed;
 
     private void Awake()
     {
@@ -24,32 +26,7 @@ public class GlobalEventHandler : MonoBehaviour
             Destroy(this);
         }
     }
-
-    [ContextMenu("Trigger Game Over")]
-    public void TriggerGameOver()
-    {
-        OnGameOver?.Invoke();
-    }
     
-    [ContextMenu("Trigger Win")]
-    public void TriggerWin()
-    {
-        OnWin?.Invoke();
-    }
-    
-    [ContextMenu("Trigger Reload")]
-    public void TriggerReload()
-    {
-        OnReload?.Invoke();
-    }
-    
-    [ContextMenu("Trigger Reload")]
-    public void ReloadFinished()
-    {
-        OnReloadFinished?.Invoke();
-    }
-    
-    [ContextMenu("Test Player Health")]
     public void TestPlayerHealth()
     {
         OnPlayerHit?.Invoke(10);
@@ -69,7 +46,27 @@ public class GlobalEventHandler : MonoBehaviour
     {
         OnEnemyKilled?.Invoke(precentageRestored);
     }
-
+    
+    public void TriggerGameOver()
+    {
+        OnGameOver?.Invoke();
+    }
+    
+    public void TriggerWin()
+    {
+        OnWin?.Invoke();
+    }
+    
+    public void TriggerReload()
+    {
+        OnReload?.Invoke();
+    }
+    
+    public void ReloadFinished()
+    {
+        OnReloadFinished?.Invoke();
+    }
+    
     public void AmmoUsed()
     {
         OnAmmoUsed?.Invoke();

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private int _damage;
+    private LayerMask _targetLayer;
     private Vector3 _direction;
     private float _lifetime = 5;
     private float timer;
-    [SerializeField] private LayerMask _targetLayer;
+    private int _damage;
     private bool _targetIsPlayer;
     
     public void Initialize(Vector3 direction, float speed, int damage, LayerMask targetLayer, float lifetime,bool targetIsPlayer)

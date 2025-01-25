@@ -52,7 +52,6 @@ public class PlayerResources : MonoBehaviour
 
     private void ReloadFinished()
     {
-        Debug.Log("Player resources reload finished");
         playerStats.currentAmmo = playerStats.maxAmmo;
         _reloadingCoroutine = null;
     }
