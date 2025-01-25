@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.21
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,23 +18,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.4
+      value: 5.23
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.18282242
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.98314595
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 158.932
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: _projectilePrefab
       value: 
       objectReference: {fileID: 8447994008746430348, guid: aab0164e0c4c448458259b5b5a324653, type: 3}
+    - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _isTargetingPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: _projectileLifeTime
       value: 5
@@ -114,11 +118,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats:
-    maxHealth: 20
-    currentHealth: 20
+    maxHealth: 6
+    currentHealth: 6
     movementSpeed: 1
     PercentageHealthOnKill: 10
   _player: {fileID: 0}
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!195 &4998556432486007922
 NavMeshAgent:
   m_ObjectHideFlags: 0

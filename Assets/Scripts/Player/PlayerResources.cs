@@ -17,18 +17,18 @@ public class PlayerResources : MonoBehaviour
     private void Start()
     {
         GlobalEventHandler.Instance.OnPlayerHit += OnPlayerHit;
-        GlobalEventHandler.Instance.OnHealthRegained += OnHealthRegained;
+        GlobalEventHandler.Instance.OnEnemyKilled += OnHealthRegained;
     }
 
     private void OnDestroy()
     {
         GlobalEventHandler.Instance.OnPlayerHit -= OnPlayerHit;
-        GlobalEventHandler.Instance.OnHealthRegained -= OnHealthRegained;
+        GlobalEventHandler.Instance.OnEnemyKilled -= OnHealthRegained;
     }
 
-    private void OnHealthRegained(int percentageRegained)
+    private void OnHealthRegained(float percentageRegained)
     {
-        playerStats.currentHealth = Mathf.Clamp(playerStats.maxHealth * percentageRegained + playerStats.currentHealth, 0, playerStats.maxHealth);
+        playerStats.currentHealth = Mathf.Clamp(playerStats.maxHealth * percentageRegained / 100f + playerStats.currentHealth, 0, playerStats.maxHealth);
     }
 
     private void OnPlayerHit(int damage)

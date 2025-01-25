@@ -5,7 +5,8 @@ public class GlobalEventHandler : MonoBehaviour
 {
     public static GlobalEventHandler Instance;
     public Action<int> OnPlayerHit;
-    public Action<int> OnHealthRegained;
+    public Action<int> OnEnemyHit;
+    public Action<float> OnEnemyKilled;
     public Action OnGameOver;
     public Action OnWin;
 
@@ -33,15 +34,15 @@ public class GlobalEventHandler : MonoBehaviour
         OnWin?.Invoke();
     }
     
-    public void RegainHealth(int percentageRegained)
-    {
-        OnHealthRegained?.Invoke(percentageRegained);
-    }
-    
     [ContextMenu("Test Player Health")]
     public void TestPlayerHealth()
     {
         OnPlayerHit?.Invoke(10);
+    }
+
+    public void EnemyHit(int damage)
+    {
+        OnEnemyHit?.Invoke(damage);
     }
     
     public void PlayerHit(int damage)
@@ -49,4 +50,8 @@ public class GlobalEventHandler : MonoBehaviour
         OnPlayerHit?.Invoke(damage);
     }
 
+    public void EnemyKilled(float precentageRestored)
+    {
+        OnEnemyKilled?.Invoke(precentageRestored);
+    }
 }

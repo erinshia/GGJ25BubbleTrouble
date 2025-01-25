@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,29 +11,19 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float  _range;
     [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private Projectile _projectilePrefab;
-    
-    // TODO remove this
-    [SerializeField] protected GameObject _player;
+    [SerializeField] private bool _isTargetingPlayer;
 
     private void Update()
     {
-        float dist = Vector3.Distance(transform.position, _player.transform.position);
-        if (dist < _range)
-        {
-            if (_timer < _cooldown)
-                _timer += Time.deltaTime;
-            else
-            {
-                _timer = 0;
-                Fire();
-            }
-        }
+        if (_timer > 0)
+            _timer -= Time.deltaTime;
     }
 
-    private void Fire()
+    public void Fire(Vector3 direction)
     {
-        Vector3 direction = _player.transform.position - transform.position;
+        if (_timer > 0) return;
         Projectile projectile = Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation);
-        projectile.Initialize(direction, _speed, _damage, _targetLayer, _projectileLifeTime);
+        projectile.Initialize(direction, _speed, _damage, _targetLayer, _projectileLifeTime, _isTargetingPlayer);
+        _timer = _cooldown;
     }
 }
