@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public struct PlayerStats
 {
     public float maxHealth;
@@ -13,7 +14,7 @@ public class PlayerResources : MonoBehaviour
 {
     [SerializeField] private PlayerStats playerStats;
     
-    private void Awake()
+    private void Start()
     {
         GlobalEventHandler.Instance.OnPlayerHit += OnPlayerHit;
     }

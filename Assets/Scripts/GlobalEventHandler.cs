@@ -20,7 +20,12 @@ public class GlobalEventHandler : MonoBehaviour
         }
     }
 
-    [ContextMenu("Player Hit")]
+    [ContextMenu("Test Player Health")]
+    public void TestPlayerHealth()
+    {
+        OnPlayerHit?.Invoke(100);
+    }
+    
     public void PlayerHit(int damage)
     {
         OnPlayerHit?.Invoke(damage);
