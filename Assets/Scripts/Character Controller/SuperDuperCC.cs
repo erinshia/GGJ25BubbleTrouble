@@ -102,7 +102,7 @@ public class SuperDuperCC : MonoBehaviour
 
     private void InterpolateVisuals()
     {
-        var targetPosition = controller.transform.position + controller.transform.TransformDirection(controller.center);
+        var targetPosition = controller.transform.position;
         interpolateTarget.position = Vector3.Lerp(interpolateTarget.position, targetPosition, Time.deltaTime * smoothTime);
 
         if (_move is { x: 0, z: 0 }) return;
