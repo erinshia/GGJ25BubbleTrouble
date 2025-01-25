@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1485085110952137164, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -52,6 +52,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: BottleEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3041117661547937394, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _speed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _cooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3411112394132551739, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: _projectilePrefab
+      value: 
+      objectReference: {fileID: 8447994008746430348, guid: aab0164e0c4c448458259b5b5a324653, type: 3}
+    - target: {fileID: 8447477884175519611, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e510033d83fce34297ea78ff4b24d34, type: 2}
     m_RemovedComponents:
     - {fileID: 7939727653094974802, guid: 39be6b785fc2dc5448b115fcd40a827d, type: 3}
     m_RemovedGameObjects: []
@@ -81,6 +105,5 @@ MonoBehaviour:
   _stats:
     maxHealth: 20
     currentHealth: 20
-    damage: 2
     movementSpeed: 1
     PercentageHealthOnKill: 10

@@ -17,11 +17,18 @@ public class PlayerResources : MonoBehaviour
     private void Start()
     {
         GlobalEventHandler.Instance.OnPlayerHit += OnPlayerHit;
+        GlobalEventHandler.Instance.OnHealthRegained += OnHealthRegained;
     }
 
     private void OnDestroy()
     {
         GlobalEventHandler.Instance.OnPlayerHit -= OnPlayerHit;
+        GlobalEventHandler.Instance.OnHealthRegained -= OnHealthRegained;
+    }
+
+    private void OnHealthRegained(int percentageRegained)
+    {
+        playerStats.currentHealth = Mathf.Clamp(playerStats.maxHealth * percentageRegained + playerStats.currentHealth, 0, playerStats.maxHealth);
     }
 
     private void OnPlayerHit(int damage)
@@ -29,5 +36,10 @@ public class PlayerResources : MonoBehaviour
         playerStats.currentHealth -= damage;
         if (playerStats.currentHealth <= 0)
             GlobalEventHandler.Instance.TriggerGameOver();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("OnCollisionEnter Player " + other.gameObject.name);
     }
 }
