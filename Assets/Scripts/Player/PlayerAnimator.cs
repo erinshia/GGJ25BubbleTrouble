@@ -38,11 +38,13 @@ public class PlayerAnimator : MonoBehaviour
         {
             if (_isRunning) return;
             _isRunning = true;
+            _animator.SetBool("isRunning", true);
             PlayRunningAnimation();
         }
         else if(_isRunning)
         {
             _isRunning = false;
+            _animator.SetBool("isRunning", false);
             PlayIdleAnimation();
         }
     }
