@@ -41,8 +41,10 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Physics.Raycast(transform.position, SuperDuperCC.Instance.PlayerVisuals.position - transform.position, out RaycastHit hit);
+        Physics.Raycast(transform.position, (SuperDuperCC.Instance.PlayerVisuals.position + new Vector3(0, 0.1f, 0)) - transform.position, out RaycastHit hit);
         bool shootInactive = (!_inRange || (hit.transform != null && (_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
+        
+        Debug.Log("hit: " + hit.transform.gameObject.name);
         
         if (_navigationActive && shootInactive)
         {
@@ -51,7 +53,7 @@ public abstract class Enemy : MonoBehaviour
         else 
         {
             _navMeshAgent.destination = transform.position;
-            if(!shootInactive) _weapon.Fire(SuperDuperCC.Instance.PlayerVisuals.position - transform.position);
+            if(!shootInactive) _weapon.Fire((SuperDuperCC.Instance.PlayerVisuals.position + new Vector3(0, 0.1f, 0)) - transform.position);
         }
     }
 
@@ -95,12 +97,18 @@ public abstract class Enemy : MonoBehaviour
     
     private void OnEnemyHit(int damage)
     {
+        Debug.Log("On Enemy Hit: " + damage + "  " + name);
         _stats.currentHealth -= damage;
         if (_stats.currentHealth <= 0)
         {
-            GlobalEventHandler.Instance.EnemyKilled(_stats.PercentageHealthOnKill);
-            gameObject.SetActive(false);
-            Destroy(gameObject);
+            HandleDeath();
         }
+    }
+
+    protected virtual void HandleDeath()
+    {
+        GlobalEventHandler.Instance.EnemyKilled(_stats.PercentageHealthOnKill);
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
