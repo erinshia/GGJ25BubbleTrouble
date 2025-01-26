@@ -44,8 +44,6 @@ public abstract class Enemy : MonoBehaviour
         Physics.Raycast(transform.position, (SuperDuperCC.Instance.PlayerVisuals.position + new Vector3(0, 0.1f, 0)) - transform.position, out RaycastHit hit);
         bool shootInactive = (!_inRange || (hit.transform != null && (_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
         
-        Debug.Log("hit: " + hit.transform.gameObject.name);
-        
         if (_navigationActive && shootInactive)
         {
             _navMeshAgent.destination = SuperDuperCC.Instance.PlayerVisuals.position;

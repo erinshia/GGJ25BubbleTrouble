@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4244411076343924281}
   - component: {fileID: 3325280214507393138}
   - component: {fileID: 833351546966973319}
-  - component: {fileID: 3766015675532420149}
+  - component: {fileID: -6112042045340258428}
   m_Layer: 7
-  m_Name: SphereProjectile
+  m_Name: PlayerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735870e959e6be44aa2bedc678531a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &3766015675532420149
+--- !u!54 &-6112042045340258428
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4467816809599127316}
   serializedVersion: 4
-  m_Mass: 0.01
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
