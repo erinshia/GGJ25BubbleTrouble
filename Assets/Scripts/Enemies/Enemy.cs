@@ -29,15 +29,15 @@ public abstract class Enemy : MonoBehaviour
         _weapon = GetComponent<Weapon>();
     }
 
-    private void Start()
-    {
-        GlobalEventHandler.Instance.OnEnemyHit += OnEnemyHit;
-    }
-
-    private void OnDestroy()
-    {
-        GlobalEventHandler.Instance.OnEnemyHit -= OnEnemyHit;
-    }
+    // private void Start()
+    // {
+    //     GlobalEventHandler.Instance.OnEnemyHit += OnEnemyHit;
+    // }
+    //
+    // private void OnDestroy()
+    // {
+    //     GlobalEventHandler.Instance.OnEnemyHit -= OnEnemyHit;
+    // }
 
     private void Update()
     {
@@ -85,15 +85,15 @@ public abstract class Enemy : MonoBehaviour
         }
         _inRange = false;
     }
+    //
+    // // TODO delete test method
+    // [ContextMenu("Kill Enemy")]
+    // private void KillEnemy()
+    // {
+    //     OnEnemyHit(100);
+    // }
     
-    // TODO delete test method
-    [ContextMenu("Kill Enemy")]
-    private void KillEnemy()
-    {
-        OnEnemyHit(100);
-    }
-    
-    private void OnEnemyHit(int damage)
+    public void OnEnemyHit(int damage)
     {
         Debug.Log("On Enemy Hit: " + damage + "  " + name);
         _stats.currentHealth -= damage;

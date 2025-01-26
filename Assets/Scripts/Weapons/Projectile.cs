@@ -34,7 +34,11 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            GlobalEventHandler.Instance.OnEnemyHit(_damage);
+            other.TryGetComponent<Enemy>(out Enemy enemy);
+            if (enemy)
+            {
+                enemy.OnEnemyHit(_damage);
+            }
         }
         gameObject.SetActive(false);
         Destroy(gameObject);
