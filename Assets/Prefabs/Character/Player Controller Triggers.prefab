@@ -472,7 +472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3889151363579217311, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.18000007
+      value: -0.33818555
       objectReference: {fileID: 0}
     - target: {fileID: 3985956468421644369, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -564,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5963513716328324376, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.18000007
+      value: -0.33818555
       objectReference: {fileID: 0}
     - target: {fileID: 6913709825639673468, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_Layer
@@ -624,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8453211243148355693, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.18000007
+      value: -0.33818555
       objectReference: {fileID: 0}
     - target: {fileID: 8903777658978123353, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_Layer
@@ -693,12 +693,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1abb63acaa33ee54cabf420ecde47fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 833351546966973319, guid: bf64c82cb3cb3254eb3329400d82ad55, type: 3}
+  _projectilePrefab: {fileID: 833351546966973319, guid: 786b338bba60ae543895a289e51414e9, type: 3}
   _sourceTransform: {fileID: 1668692893542201174}
   _targetLayer:
     serializedVersion: 2
     m_Bits: 64
-  _speed: 20
+  _speed: 0.1
   _projectileLifeTime: 5
   _range: 10
   _damage: 1

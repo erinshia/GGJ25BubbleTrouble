@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 4244411076343924281, guid: 7fe01cc83f0be3c47bcc53a7e3a5b9d6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0fa0da5bb9851aff5ac852df9959f804, type: 2}
     - target: {fileID: 4467816809599127316, guid: 7fe01cc83f0be3c47bcc53a7e3a5b9d6, type: 3}
       propertyPath: m_Name
       value: BobaProjectile

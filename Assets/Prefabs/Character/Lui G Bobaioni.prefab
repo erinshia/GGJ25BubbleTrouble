@@ -210,10 +210,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
+    - target: {fileID: -1083258463246760984, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: m_Name
+      value: Liquid Fill
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
       propertyPath: m_Name
       value: Lui G Bobaioni
       objectReference: {fileID: 0}
+    - target: {fileID: 1892407144868407389, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 612da021e77e214449220d0e39315984, type: 2}
     - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
       propertyPath: m_Enabled
       value: 1
