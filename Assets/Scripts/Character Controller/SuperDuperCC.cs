@@ -70,8 +70,8 @@ public class SuperDuperCC : MonoBehaviour
         _initialJumpVelocity = Mathf.Sqrt(2 * -gravity * jumpHeight);
         playerInput.actions["Aim"].performed += ctx => HandleAim(true);
         playerInput.actions["Aim"].canceled += ctx => HandleAim(false);
-        playerInput.actions["Shoot"].performed += ctx => _isShooting = true;
-        playerInput.actions["Shoot"].canceled += ctx => _isShooting = false;
+        playerInput.actions["Attack"].performed += ctx => _isShooting = true;
+        playerInput.actions["Attack"].canceled += ctx => _isShooting = false;
         HandleAim(false);
     }
     
