@@ -374,7 +374,7 @@ MonoBehaviour:
   playerInput: {fileID: 2742338742044438334}
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   interpolateTarget: {fileID: 1450339768056715524}
   smoothTime: 25
   mass: 1

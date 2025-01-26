@@ -39,8 +39,6 @@ public class SuperDuperCC : MonoBehaviour
     public event Action OnAimEnter;
     public event Action OnAimExit;
     public event Action OnJump;
-    public event Action OnMovementStart;
-    public event Action OnMovementEnd;
     
     /// <summary>
     /// Invoked when the player shoots.
@@ -104,7 +102,7 @@ public class SuperDuperCC : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         HandleMovement();
         HandleMouse();
@@ -120,18 +118,16 @@ public class SuperDuperCC : MonoBehaviour
         var aimRay = new Ray(aimCam.transform.position, aimCam.transform.forward);
 
         // Calculate direction from the gun's origin to the aim point (center of the screen)
-        Vector3 shootDirection = (aimRay.GetPoint(50f) - rayCastOrigin.position).normalized; // Point 50f units forward from aimCam
-    
-        if (Physics.Raycast(rayCastOrigin.position, shootDirection, out var hit, 200f, hitLayer))
+        if (Physics.Raycast(aimRay, out var hit, 1000f, hitLayer))
         {
-            Debug.DrawRay(rayCastOrigin.position, shootDirection * hit.distance, Color.red);
-            Debug.Log(hit.collider.name);
+            var shootDirection = (hit.point - rayCastOrigin.position).normalized;
+            Debug.DrawRay(rayCastOrigin.position, shootDirection * 200f, Color.green);
             OnShoot?.Invoke(rayCastOrigin.position, shootDirection);
         }
         else
         {
-            Debug.DrawRay(rayCastOrigin.position, shootDirection * 200f, Color.red);
-            OnShoot?.Invoke(rayCastOrigin.position, shootDirection);
+            Debug.DrawRay(rayCastOrigin.position, aimRay.direction * 200f, Color.red);
+            OnShoot?.Invoke(rayCastOrigin.position, aimRay.direction);
         }
     }
 
@@ -156,14 +152,6 @@ public class SuperDuperCC : MonoBehaviour
     private void HandleMovement()
     {
         var input = playerInput.actions["Move"].ReadValue<Vector2>();
-        if(_move is { x: 0, y: 0, z: 0 } && input != Vector2.zero)
-        {
-            OnMovementStart?.Invoke();
-        }
-        else if (_move != Vector3.zero && input == Vector2.zero)
-        {
-            OnMovementEnd?.Invoke();
-        }
         
         if (controller.isGrounded && _jump && !_isJumping)
         {
