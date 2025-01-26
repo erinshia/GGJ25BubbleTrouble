@@ -84,4 +84,13 @@ public class PlayerAnimator : MonoBehaviour
         _animator.ResetTrigger(Shooting);
         _animator.ResetTrigger(Jumping);
     }
+    
+    private void PlayShootingAnimation()
+    {
+        _animator.SetTrigger(Shooting);
+        _animator.ResetTrigger(Running);
+        _animator.ResetTrigger(Idle);
+        _animator.ResetTrigger(Dead);
+        _animator.ResetTrigger(Jumping);
+    }
 }
