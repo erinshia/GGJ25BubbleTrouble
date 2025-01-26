@@ -95,7 +95,6 @@ public abstract class Enemy : MonoBehaviour
     
     public void OnEnemyHit(int damage)
     {
-        Debug.Log("On Enemy Hit: " + damage + "  " + name);
         _stats.currentHealth -= damage;
         if (_stats.currentHealth <= 0)
         {

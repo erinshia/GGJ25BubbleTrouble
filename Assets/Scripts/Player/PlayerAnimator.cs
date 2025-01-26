@@ -88,10 +88,8 @@ public class PlayerAnimator : MonoBehaviour
         _animator.ResetTrigger(Jumping);
     }
     
-    //TODO change this to use the params
     private void PlayShootingAnimation(Vector3 arg1, Vector3 arg2)
     {
-        Debug.Log("play shooting anim");
         _animator.SetTrigger(Shooting);
         _animator.ResetTrigger(Running);
         _animator.ResetTrigger(Idle);
