@@ -22,3 +22,26 @@ inline half3 CalculateLightAmount(half4 positionOS, half3 normalWS)
 
     return saturate(lightAmount);
 }
+
+half3 SampleReflection(half4 positionCS, half3 positionWS, half3 worldNormal, half3 viewDir, half smoothness = 1,
+                       half occlusion = 1)
+{
+    // Compute the reflection direction
+    half3 reflectionDir = reflect(-viewDir, worldNormal);
+
+    // half perceptualRoughness = RoughnessToPerceptualRoughness(1.0 - smoothness);
+    half perceptualRoughness = RoughnessToPerceptualRoughness(0.5); // Replace 0.5 with smoothness property
+    half2 screenUV = GetNormalizedScreenSpaceUV(positionCS);
+
+
+    // Sample the reflection probe
+    half3 reflection = GlossyEnvironmentReflection(
+        reflectionDir,
+        positionWS,
+        perceptualRoughness,
+        occlusion,
+        screenUV
+    );
+
+    return reflection;
+}
