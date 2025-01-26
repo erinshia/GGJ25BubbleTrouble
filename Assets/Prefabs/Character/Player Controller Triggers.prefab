@@ -717,8 +717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats:
-    maxHealth: 30
-    currentHealth: 30
+    maxHealth: 50
+    currentHealth: 50
     maxAmmo: 5
     currentAmmo: 5
 --- !u!114 &4149370294987383875 stripped
