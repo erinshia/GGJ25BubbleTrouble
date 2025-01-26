@@ -31,6 +31,9 @@ public class SuperDuperCC : MonoBehaviour
     [SerializeField] private CinemachineCamera aimCam;
     [SerializeField] private Transform rayCastOrigin;
     
+    [Header("Constraints")]
+    [SerializeField] private Transform lookAtConstraint;
+    
     public event Action OnAimEnter;
     public event Action OnAimExit;
     public event Action OnJump;
@@ -210,14 +213,17 @@ public class SuperDuperCC : MonoBehaviour
             {
                 var target = hit.point;
                 //rotate the player to face the target
+                target.y = controller.transform.position.y;
                 var lookAtTarget = Quaternion.LookRotation(target - controller.transform.position);
                 interpolateTarget.rotation = Quaternion.Slerp(interpolateTarget.rotation, lookAtTarget, Time.deltaTime * smoothTime);
+                lookAtConstraint.position = target;
             }
             else
             {
                 //rotate the player to face the camera forward
                 var lookAtCamera = Quaternion.LookRotation(aimCam.transform.forward);
                 interpolateTarget.rotation = Quaternion.Slerp(interpolateTarget.rotation, lookAtCamera, Time.deltaTime * smoothTime);
+                lookAtConstraint.position = aimCam.transform.position + aimCam.transform.forward * 100f;
             }
             return;
         }
@@ -229,6 +235,7 @@ public class SuperDuperCC : MonoBehaviour
         var lateralMove = new Vector3(_move.x, 0, _move.z);
         var lookRotation = Quaternion.LookRotation(lateralMove);
         interpolateTarget.rotation = Quaternion.Slerp(interpolateTarget.rotation, lookRotation, Time.deltaTime * smoothTime);
+        lookAtConstraint.position = controller.transform.position + lateralMove;
     }
 
     private IEnumerator JumpCoroutine()
