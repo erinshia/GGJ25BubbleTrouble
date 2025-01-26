@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 
 public class SuperDuperCC : MonoBehaviour
 {
+    public static SuperDuperCC Instance;
+    
     [SerializeField] private CharacterController controller;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private LayerMask hitLayer;
 
     [Header("Interpolation Settings")]
     [SerializeField] private Transform interpolateTarget;    
@@ -21,6 +24,7 @@ public class SuperDuperCC : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
 
     [Header("Camera Settings")]
+    [SerializeField] private float cameraSensitivity = 10f;
     [SerializeField] private Transform lookDirection;
     [SerializeField] private float maxLookAngle = 90f;
     [SerializeField] private CinemachineCamera freeLookCam;
@@ -30,7 +34,15 @@ public class SuperDuperCC : MonoBehaviour
     public event Action OnAimEnter;
     public event Action OnAimExit;
     public event Action OnJump;
+    public event Action OnMovementStart;
+    public event Action OnMovementEnd;
     
+    /// <summary>
+    /// Invoked when the player shoots.
+    /// The first Vector3 is the origin of the raycast.
+    /// The second Vector3 is the direction of the raycast.
+    /// </summary>
+    public event Action<Vector3, Vector3> OnShoot;
     
     private bool _jump = false;
     private bool _isJumping = false;
@@ -38,6 +50,19 @@ public class SuperDuperCC : MonoBehaviour
     private float _initialJumpVelocity;
     private bool _isAiming = false;
     private float _xRotation = 0f; // Tracks the current X-axis rotation
+    private bool _isShooting = false;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     
     private void Start()
     {
@@ -45,8 +70,11 @@ public class SuperDuperCC : MonoBehaviour
         _initialJumpVelocity = Mathf.Sqrt(2 * -gravity * jumpHeight);
         playerInput.actions["Aim"].performed += ctx => HandleAim(true);
         playerInput.actions["Aim"].canceled += ctx => HandleAim(false);
+        playerInput.actions["Shoot"].performed += ctx => _isShooting = true;
+        playerInput.actions["Shoot"].canceled += ctx => _isShooting = false;
         HandleAim(false);
     }
+    
 
     private void HandleAim(bool isAiming)
     {
@@ -75,12 +103,38 @@ public class SuperDuperCC : MonoBehaviour
     {
         HandleMovement();
         HandleMouse();
+        HandleShoot();
         InterpolateVisuals();
+    }
+
+    private void HandleShoot()
+    {
+        if (!_isShooting || !_isAiming) return;
+
+        // Create a ray from the center of the screen
+        var aimRay = new Ray(aimCam.transform.position, aimCam.transform.forward);
+
+        // Calculate direction from the gun's origin to the aim point (center of the screen)
+        Vector3 shootDirection = (aimRay.GetPoint(50f) - rayCastOrigin.position).normalized; // Point 50f units forward from aimCam
+    
+        if (Physics.Raycast(rayCastOrigin.position, shootDirection, out var hit, 200f, hitLayer))
+        {
+            Debug.DrawRay(rayCastOrigin.position, shootDirection * hit.distance, Color.red);
+            Debug.Log(hit.collider.name);
+            OnShoot?.Invoke(rayCastOrigin.position, shootDirection);
+        }
+        else
+        {
+            Debug.DrawRay(rayCastOrigin.position, shootDirection * 200f, Color.red);
+            OnShoot?.Invoke(rayCastOrigin.position, shootDirection);
+        }
     }
 
     private void HandleMouse()
     {
         var mouseInput = playerInput.actions["Look"].ReadValue<Vector2>();
+        mouseInput *= Time.deltaTime;
+        mouseInput *= cameraSensitivity;
 
         if (mouseInput == Vector2.zero) return;
 
@@ -98,10 +152,18 @@ public class SuperDuperCC : MonoBehaviour
     private void HandleMovement()
     {
         var input = playerInput.actions["Move"].ReadValue<Vector2>();
+        if(_move is { x: 0, y: 0, z: 0 } && input != Vector2.zero)
+        {
+            OnMovementStart?.Invoke();
+        }
+        else if (_move != Vector3.zero && input == Vector2.zero)
+        {
+            OnMovementEnd?.Invoke();
+        }
         
         if (controller.isGrounded && _jump && !_isJumping)
         {
-            StartCoroutine(JumpCoroutine());
+             StartCoroutine(JumpCoroutine());
             OnJump?.Invoke();
         }
         
