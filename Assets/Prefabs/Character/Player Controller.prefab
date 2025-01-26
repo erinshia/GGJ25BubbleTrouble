@@ -311,6 +311,7 @@ MonoBehaviour:
   acceleration: 12
   maxSpeed: 1
   jumpHeight: 0.4
+  cameraSensitivity: 10
   lookDirection: {fileID: 8003994314928471783}
   maxLookAngle: 75
   freeLookCam: {fileID: 22150674049054137}
