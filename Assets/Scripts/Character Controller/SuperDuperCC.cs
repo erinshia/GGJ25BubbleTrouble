@@ -76,6 +76,7 @@ public class SuperDuperCC : MonoBehaviour
         playerInput.actions["Attack"].performed += ctx => _isShooting = true;
         playerInput.actions["Attack"].canceled += ctx => _isShooting = false;
         HandleAim(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,7 +15,22 @@ public class Weapon : MonoBehaviour
     [SerializeField] private bool _isTargetingPlayer;
 
     private float _timer;
-    
+
+    private void Start()
+    {
+        if (_isTargetingPlayer == false)
+        {
+            SuperDuperCC.Instance.OnShoot += OnShoot;
+        }
+    }
+
+    private void OnShoot(Vector3 origin, Vector3 direction)
+    {
+        _sourceTransform.position = origin;
+        Fire(direction);
+    }
+
+
     private void Update()
     {
         if (_timer > 0)

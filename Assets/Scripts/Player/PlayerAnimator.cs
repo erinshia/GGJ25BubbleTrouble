@@ -21,8 +21,6 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         SuperDuperCC.Instance.OnJump += PlayJumpAnimation;
-        SuperDuperCC.Instance.OnMovementStart += PlayRunningAnimation;
-        SuperDuperCC.Instance.OnMovementEnd += PlayIdleAnimation;
         SuperDuperCC.Instance.OnShoot += PlayShootingAnimation;
         // GlobalEventHandler.Instance.OnPlayerJump += PlayJumpAnimation;
         GlobalEventHandler.Instance.OnGameOver += PlayDeadAnimation;
@@ -31,8 +29,6 @@ public class PlayerAnimator : MonoBehaviour
     private void OnDestroy()
     {
         SuperDuperCC.Instance.OnJump -= PlayJumpAnimation;
-        SuperDuperCC.Instance.OnMovementStart -= PlayRunningAnimation;
-        SuperDuperCC.Instance.OnMovementEnd -= PlayIdleAnimation;
         SuperDuperCC.Instance.OnShoot -= PlayShootingAnimation;
         GlobalEventHandler.Instance.OnGameOver -= PlayDeadAnimation;
     }

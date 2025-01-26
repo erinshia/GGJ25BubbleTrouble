@@ -16,15 +16,6 @@ public class PlayerResources : MonoBehaviour
     [SerializeField] private PlayerStats playerStats;
     private Coroutine _reloadingCoroutine;
 
-    // TODO remove this when shooting is implemented
-    private void Update()
-    {
-        if (playerStats.currentAmmo > 0)
-        {
-            GetComponent<Weapon>().Fire(transform.forward);
-        }
-    }
-
     private void Start()
     {
         GlobalEventHandler.Instance.OnPlayerHit += OnPlayerHit;

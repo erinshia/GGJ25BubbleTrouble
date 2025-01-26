@@ -3,7 +3,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private LayerMask _targetLayer;
-    private Vector3 _direction;
+    protected Vector3 _direction;
+    protected float _speed;
     private float _lifetime = 5;
     private float timer;
     private int _damage;
@@ -15,6 +16,13 @@ public class Projectile : MonoBehaviour
         _targetLayer = targetLayer; 
         _lifetime = lifetime;
         _targetIsPlayer = targetIsPlayer;
+        _direction = direction;
+        _speed = speed;
+        SendFlying(direction, speed);
+    }
+
+    protected virtual void SendFlying(Vector3 direction, float speed)
+    {
         GetComponent<Rigidbody>().AddForce(direction.normalized * speed, ForceMode.Impulse);
     }
 
