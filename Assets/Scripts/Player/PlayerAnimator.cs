@@ -21,8 +21,8 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         SuperDuperCC.Instance.OnJump += PlayJumpAnimation;
-        SuperDuperCC.Instance.OnMovementStart += PlayRunningAnimation;
-        SuperDuperCC.Instance.OnMovementEnd += PlayIdleAnimation;
+        // SuperDuperCC.Instance.OnMovementStart += PlayRunningAnimation;
+        // SuperDuperCC.Instance.OnMovementEnd += PlayIdleAnimation;
         SuperDuperCC.Instance.OnShoot += PlayShootingAnimation;
         // GlobalEventHandler.Instance.OnPlayerJump += PlayJumpAnimation;
         GlobalEventHandler.Instance.OnGameOver += PlayDeadAnimation;
@@ -31,15 +31,33 @@ public class PlayerAnimator : MonoBehaviour
     private void OnDestroy()
     {
         SuperDuperCC.Instance.OnJump -= PlayJumpAnimation;
-        SuperDuperCC.Instance.OnMovementStart -= PlayRunningAnimation;
-        SuperDuperCC.Instance.OnMovementEnd -= PlayIdleAnimation;
+        // SuperDuperCC.Instance.OnMovementStart -= PlayRunningAnimation;
+        // SuperDuperCC.Instance.OnMovementEnd -= PlayIdleAnimation;
         SuperDuperCC.Instance.OnShoot -= PlayShootingAnimation;
         GlobalEventHandler.Instance.OnGameOver -= PlayDeadAnimation;
     }
 
+    private void Update()
+    {
+        var input = playerInput.actions["Move"].ReadValue<Vector2>();
+    
+        if (input != Vector2.zero)
+        {
+            if (_isRunning) return;
+            _isRunning = true;
+            _animator.SetBool("isRunning", true);
+            PlayRunningAnimation();
+        }
+        else if(_isRunning)
+        {
+            _isRunning = false;
+            _animator.SetBool("isRunning", false);
+            PlayIdleAnimation();
+        }
+    }
+
     private void PlayIdleAnimation()
     {
-        _animator.SetBool("isRunning", false);
         _animator.SetTrigger(Idle);
         _animator.ResetTrigger(Running);
         _animator.ResetTrigger(Dead);
@@ -58,7 +76,6 @@ public class PlayerAnimator : MonoBehaviour
     
     private void PlayRunningAnimation()
     {
-        _animator.SetBool("isRunning", true);
         _animator.SetTrigger(Running);
         _animator.ResetTrigger(Jumping);
         _animator.ResetTrigger(Dead);
