@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
     private void Update()
     {
         Physics.Raycast(transform.position, _player.transform.position - transform.position, out RaycastHit hit);
-        bool shootInactive = (!_inRange || ((_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
+        bool shootInactive = (!_inRange || (hit.transform != null && (_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
         
         if (_navigationActive && shootInactive)
         {

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private Canvas _pauseScreen;
     [SerializeField] private ReloadOverlay _reloadOverlay;
     private InputAction _escapeAction;
+    private Coroutine _loadLoseScreenCoroutine;
     
     private void Start()
     {
@@ -34,6 +36,12 @@ public class GameMenu : MonoBehaviour
 
     private void LoadLoseScreen()
     {
+        _loadLoseScreenCoroutine ??= StartCoroutine(LoadLoseScreenCoroutine());
+    }
+
+    private IEnumerator LoadLoseScreenCoroutine()
+    {
+        yield return new WaitForSeconds(0.7f);
         _sceneLoader.LoadScene(3);
     }
 
