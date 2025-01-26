@@ -411,10 +411,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1651100197724774507}
     m_Modifications:
-    - target: {fileID: 438724391322736389, guid: b1d3c0350ffdc07419a4712031cee7f6, type: 3}
-      propertyPath: _projectilePrefab
-      value: 
-      objectReference: {fileID: 833351546966973319, guid: bf64c82cb3cb3254eb3329400d82ad55, type: 3}
     - target: {fileID: 2939670269485062956, guid: b1d3c0350ffdc07419a4712031cee7f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5087172
@@ -458,14 +454,6 @@ PrefabInstance:
     - target: {fileID: 3699096080363594753, guid: b1d3c0350ffdc07419a4712031cee7f6, type: 3}
       propertyPath: m_Name
       value: Player Controller Triggers
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237836612431604239, guid: b1d3c0350ffdc07419a4712031cee7f6, type: 3}
-      propertyPath: field of view
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 7698039433960645392, guid: b1d3c0350ffdc07419a4712031cee7f6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.13699996
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -548,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5263027479487390066, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: field of view
-      value: 35
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5605160024583943159, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_Layer
@@ -616,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8453211243148355693, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08799994
+      value: 0.13699996
       objectReference: {fileID: 0}
     - target: {fileID: 8453211243148355693, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -657,6 +657,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5605160024583943159, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4287149294736858738}
+    - targetCorrespondingSourceObject: {fileID: 5605160024583943159, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9214167480035191603}
   m_SourcePrefab: {fileID: 100100000, guid: 7ade392d093548cf58edc5da366abdb6, type: 3}
 --- !u!4 &1668692893542201174 stripped
 Transform:
@@ -690,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1abb63acaa33ee54cabf420ecde47fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 568917658350258158, guid: 2f91af28ae0facc8cb2fbacf48599720, type: 3}
+  _projectilePrefab: {fileID: 833351546966973319, guid: bf64c82cb3cb3254eb3329400d82ad55, type: 3}
   _sourceTransform: {fileID: 1668692893542201174}
   _targetLayer:
     serializedVersion: 2
@@ -714,8 +717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats:
-    maxHealth: 50
-    currentHealth: 50
+    maxHealth: 30
+    currentHealth: 30
     maxAmmo: 5
     currentAmmo: 5
 --- !u!114 &4149370294987383875 stripped
@@ -769,3 +772,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 4149370294987383875}
+--- !u!136 &9214167480035191603
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932014330191411338}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 0.22
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.08, z: 0}
