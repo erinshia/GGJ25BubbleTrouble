@@ -13,9 +13,6 @@ public struct EnemyStats
 
 public abstract class Enemy : MonoBehaviour
 {
-    // TODO remove this
-    [SerializeField] protected GameObject _player;
-    
     [SerializeField] protected EnemyStats _stats;
     [SerializeField] protected LayerMask _playerLayer;
     [SerializeField] private bool _isLongRange;
@@ -44,17 +41,17 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Physics.Raycast(transform.position, _player.transform.position - transform.position, out RaycastHit hit);
+        Physics.Raycast(transform.position, SuperDuperCC.Instance.PlayerVisuals.position - transform.position, out RaycastHit hit);
         bool shootInactive = (!_inRange || (hit.transform != null && (_playerLayer.value & (1 << hit.transform.gameObject.layer)) <= 0));
         
         if (_navigationActive && shootInactive)
         {
-            _navMeshAgent.destination = _player.transform.position;
+            _navMeshAgent.destination = SuperDuperCC.Instance.PlayerVisuals.position;
         }
         else 
         {
             _navMeshAgent.destination = transform.position;
-            if(!shootInactive) _weapon.Fire(_player.transform.position - transform.position);
+            if(!shootInactive) _weapon.Fire(SuperDuperCC.Instance.PlayerVisuals.position - transform.position);
         }
     }
 

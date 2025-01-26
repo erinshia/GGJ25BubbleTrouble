@@ -33,6 +33,8 @@ public class SuperDuperCC : MonoBehaviour
     
     [Header("Constraints")]
     [SerializeField] private Transform lookAtConstraint;
+
+    public Transform PlayerVisuals => interpolateTarget;
     
     public event Action OnAimEnter;
     public event Action OnAimExit;
@@ -150,7 +152,6 @@ public class SuperDuperCC : MonoBehaviour
         _xRotation = Mathf.Clamp(_xRotation, -maxLookAngle, maxLookAngle);
         lookDirection.localRotation = Quaternion.Euler(_xRotation, 0, 0);
     }
-
     
     private void HandleMovement()
     {
