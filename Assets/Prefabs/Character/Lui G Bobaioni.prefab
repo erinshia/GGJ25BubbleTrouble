@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8313990929061890644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5631775843043173742}
+  m_Layer: 0
+  m_Name: AimOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5631775843043173742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313990929061890644}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.70710677, y: -0.000000091618844, z: -0.00000014761461, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8195648207901203434}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &6285543739232225687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48,12 +79,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1584006214944409509, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
       propertyPath: m_Name
       value: Lui G Bobaioni
       objectReference: {fileID: 0}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3716ed845a84cc94cbf2746e56293e9c, type: 2}
+    - target: {fileID: 3565785980474189866, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: eab48db140e5a8a40b63ac8f46d81f27, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2776036125584298621, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5631775843043173742}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+--- !u!4 &8195648207901203434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2776036125584298621, guid: 3dc749962e7988f4190df866315dd6b0, type: 3}
+  m_PrefabInstance: {fileID: 6285543739232225687}
+  m_PrefabAsset: {fileID: 0}
