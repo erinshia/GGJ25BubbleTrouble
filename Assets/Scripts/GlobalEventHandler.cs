@@ -14,7 +14,6 @@ public class GlobalEventHandler : MonoBehaviour
     public Action OnReload;
     public Action OnReloadFinished;
     public Action OnAmmoUsed;
-    public Action OnPlayerJump;
 
     private void Awake()
     {
@@ -71,10 +70,5 @@ public class GlobalEventHandler : MonoBehaviour
     public void AmmoUsed()
     {
         OnAmmoUsed?.Invoke();
-    }
-
-    public void PlayerJumpTriggered()
-    {
-        OnPlayerJump?.Invoke();
     }
 }

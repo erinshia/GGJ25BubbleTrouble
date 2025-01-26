@@ -20,20 +20,27 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Start()
     {
-        GlobalEventHandler.Instance.OnPlayerJump += PlayJumpAnimation;
+        SuperDuperCC.Instance.OnJump += PlayJumpAnimation;
+        // SuperDuperCC.Instance.OnMovementStart += PlayRunningAnimation;
+        // SuperDuperCC.Instance.OnMovementEnd += PlayIdleAnimation;
+        SuperDuperCC.Instance.OnShoot += PlayShootingAnimation;
+        // GlobalEventHandler.Instance.OnPlayerJump += PlayJumpAnimation;
         GlobalEventHandler.Instance.OnGameOver += PlayDeadAnimation;
     }
 
     private void OnDestroy()
     {
-        GlobalEventHandler.Instance.OnPlayerJump -= PlayJumpAnimation;
+        SuperDuperCC.Instance.OnJump -= PlayJumpAnimation;
+        // SuperDuperCC.Instance.OnMovementStart -= PlayRunningAnimation;
+        // SuperDuperCC.Instance.OnMovementEnd -= PlayIdleAnimation;
+        SuperDuperCC.Instance.OnShoot -= PlayShootingAnimation;
         GlobalEventHandler.Instance.OnGameOver -= PlayDeadAnimation;
     }
 
     private void Update()
     {
         var input = playerInput.actions["Move"].ReadValue<Vector2>();
-
+    
         if (input != Vector2.zero)
         {
             if (_isRunning) return;
@@ -85,8 +92,10 @@ public class PlayerAnimator : MonoBehaviour
         _animator.ResetTrigger(Jumping);
     }
     
-    private void PlayShootingAnimation()
+    //TODO change this to use the params
+    private void PlayShootingAnimation(Vector3 arg1, Vector3 arg2)
     {
+        Debug.Log("play shooting anim");
         _animator.SetTrigger(Shooting);
         _animator.ResetTrigger(Running);
         _animator.ResetTrigger(Idle);

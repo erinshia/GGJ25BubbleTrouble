@@ -236,7 +236,6 @@ public class SuperDuperCC : MonoBehaviour
         _isJumping = true;
         _jump = false;
 
-        GlobalEventHandler.Instance.PlayerJumpTriggered();
         _initialJumpVelocity = Mathf.Sqrt(2 * -gravity * jumpHeight);
         _move.y = _initialJumpVelocity;
         var timer = 0f;
