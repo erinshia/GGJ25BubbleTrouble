@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 611861129296832094}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13700002, y: 0.30000007, z: -0.5}
+  m_LocalPosition: {x: 0.088, y: 0.8460001, z: -0.074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -154,7 +154,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 70
+  field of view: 35
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -374,7 +374,7 @@ MonoBehaviour:
   playerInput: {fileID: 2742338742044438334}
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   interpolateTarget: {fileID: 1450339768056715524}
   smoothTime: 25
   mass: 1
@@ -446,7 +446,7 @@ Transform:
   m_GameObject: {fileID: 4735644843958733465}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.13700002, y: 0.30000007, z: -0.5}
+  m_LocalPosition: {x: 0.13700002, y: 0.3, z: -0.074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -518,8 +518,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 1
     IgnoreTag: Player
-    CameraRadius: 0.176
-    DampingIntoCollision: 0
+    CameraRadius: 0.07
+    DampingIntoCollision: 0.14
     DampingFromCollision: 0.5
 --- !u!1 &4751906266205020480
 GameObject:
@@ -723,7 +723,7 @@ Transform:
   m_GameObject: {fileID: 6042226688326776114}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.088, y: 0.30000007, z: -0.5}
+  m_LocalPosition: {x: 0.088, y: 0.3, z: -0.074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -795,8 +795,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 1
     IgnoreTag: Player
-    CameraRadius: 0.176
-    DampingIntoCollision: 0
+    CameraRadius: 0.07
+    DampingIntoCollision: 0.14
     DampingFromCollision: 0.5
 --- !u!1001 &1599431197465282353
 PrefabInstance:
